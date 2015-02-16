@@ -1,4 +1,4 @@
-# Hubot Nietzche
+# Hubot Posse
 
 A hubot plugin deal with Hooroo posses.
 
@@ -12,16 +12,14 @@ npm install hubot-posse
 
 Then add this line:
 
-**hubot-nietzche**
+**hubot-posse**
 
 to your `external-scripts.json`
 
 ## Hubot Commands
 ```
-hubot posse me [<number>]
+<!-- hubot posse me [<number>] -->
 ```
 
-- number (optional): The number of quotes to display (max. 10)
-
-[![Posse for real](http://i.imgur.com/C6h3ZB0.jpg)]
+![Posse for real](http://i.imgur.com/C6h3ZB0.jpg)
 
