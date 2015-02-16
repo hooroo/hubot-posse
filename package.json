@@ -1,0 +1,30 @@
+{
+  "name": "hubot-posse",
+  "version": "0.1.0",
+  "description": "A hoobot plugin for managing Hooroo 'posses'",
+  "main": "index.js",
+  "scripts": {
+    "test": "script/test"
+  },
+  "keywords": [
+    "hubot",
+    "hubot-scripts",
+    "hooroo",
+    "posse"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/clouseauu/hubot-posse.git"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "sinon-chai": "*",
+    "sinon": "*"
+  },
+  "dependencies": {
+    "coffee-script": "~1.6"
+  },
+  "author": "Daniel Angel Bradford",
+  "license": "MIT"
+}
