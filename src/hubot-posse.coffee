@@ -8,13 +8,13 @@
 #   None
 #
 # Commands:
-# posse me - displays all existing posses
-# posse me info <posse name or slug> - displays posse's name, total number of members, number of members per team
-# posse me members <posse name or slug> - lists the members for each posse
-# posse me (squids|support) <posse name or slug>  - shows you which members are squids for that posse
-# posse me my posse - tells you which posse you're on
-# posse me [team member]: Displays information about that team member
-# posse me update: Updates posse database
+# posse (me) update: Updates posse database
+# posse (me) - displays all existing posses
+# posse (me) info <posse name or slug> - displays posse's name, total number of members, number of members per team
+# (posse me) members <posse name or slug> - lists the members for each posse
+# (posse me) (squid(s)|support) (for) <posse name or slug>  - shows you which members are squids for that posse
+# (posse me) my posse - tells you which posse you're on
+# (posse me) member [team member]: Displays information about that team member
 
 request       = require('request')
 stringHelper  = require("underscore.string")
@@ -58,8 +58,9 @@ module.exports = (robot) ->
       message
 
     myPosse: (nick) ->
+      possesBelongingTo = @_possesForMember(nick)
       return "Too bad! You don't seem to be in a posse!" unless possesBelongingTo.length
-      "You are a member of the #{stringHelper.toSentence(@_possesForMember(nick))} posse(s)"
+      "You are a member of the #{stringHelper.toSentence(possesBelongingTo)} posse(s)"
 
     squids: (posseName) ->
       return "I don't know the posse #{posseName}" unless (group = @_parsePosse(posseName))
@@ -80,7 +81,7 @@ module.exports = (robot) ->
 
     _parsePosse: (posseName) ->
       for group in @_posses()
-        regex = new RegExp( "#{group.name}|#{group.slug}", "i" )
+        regex = new RegExp( "#{group.name}|#{stringHelper.words(group.slug, /-/).join('|')}", "i" )
         return group if posseName.match( regex )
       return false
 
@@ -125,37 +126,27 @@ module.exports = (robot) ->
   #preload people on restart
   posse.loadPosses()
 
-  robot.respond /posse me update$/i, (msg) ->
-    console.info "update..."
+  robot.respond /posse( me)? update$/i, (msg) ->
     if posse.loadPosses()
       msg.send "I have updated the posse database"
     else
       msg.send "Something went wrong. I can't update the posse database"
 
-  robot.respond /posse me$/i, (msg) ->
-    console.info "posse info..."
+  robot.respond /posse( me)?$/i, (msg) ->
     info = posse.allPosses()
     msg.send info
 
-  robot.respond /posse me info ([\w \-]+)$/i, (msg) ->
-    console.info "single posse info..."
-    console.log msg.match
-    msg.send(posse.posseInfo(msg.match[1]))
+  robot.respond /posse( me)? info ([\w \-]+)$/i, (msg) ->
+    msg.send(posse.posseInfo(msg.match[2]))
 
-  robot.respond /posse me members ([\w \-]+)$/i, (msg) ->
-    console.info "posse members..."
-    console.log msg.match
-    msg.send(posse.posseMembers(msg.match[1]))
+  robot.respond /posse( me)? members ([\w \-]+)$/i, (msg) ->
+    msg.send(posse.posseMembers(msg.match[2]))
 
-  robot.respond /posse me my posse$/i, (msg) ->
+  robot.respond /(posse )?(me )?my posse$/i, (msg) ->
     msg.send(posse.myPosse(msg.message.user.name))
 
-  robot.respond /posse me (squid|squids|support)( for)? ([\w \-]+)$/i, (msg) ->
-    console.info "support"
-    console.log msg.match
-    msg.send(posse.squids(msg.match[3]))
+  robot.respond /(posse )?(me )?(squid|squids|support)( for)? ([\w \-]+)$/i, (msg) ->
+    msg.send(posse.squids(msg.match[5]))
 
-  robot.respond /posse me member ([\w \-]+)$/i, (msg) ->
-    console.info "posse single member..."
-    console.log msg.match
-    msg.send(posse.member(msg.match[1]))
+  robot.respond /(posse )?(me )?member ([\w \-]+)$/i, (msg) ->
+    msg.send(posse.member(msg.match[3]))
