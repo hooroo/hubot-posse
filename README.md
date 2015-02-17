@@ -1,6 +1,6 @@
 # Hubot Posse
 
-A hubot plugin deal with Hooroo posses.
+A hubot plugin that provides information about Hooroo posses.
 
 ## Installation
 

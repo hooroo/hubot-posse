@@ -1,11 +1,11 @@
 # Description:
-#   A hubot plugin to ...
+#   A hubot plugin that provides information about Hooroo posses.
 #
 # Dependencies:
 #   None
 #
 # Configuration:
-#   None
+#   HUBOT_POSSE_DB_LOCATION - a JSON Endpoint to query the posse database.
 #
 # Commands:
 # posse (me) update: Updates posse database
