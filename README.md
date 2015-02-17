@@ -12,9 +12,35 @@ npm install hubot-posse
 
 Then add this line:
 
-**hubot-posse**
+```
+hubot-posse
+```
 
 to your `external-scripts.json`
+
+Furthermore, you need an environment variable `HUBOT_POSSE_DB_LOCATION` with the location of a json endpoint that provides information about the posses in the following format:
+
+```json
+[
+  {
+    "name": "Posse Name",
+    "slug": "posse-name",
+    "description": "A brief description of your posse",
+    "members": [
+      {
+        "name": "A member",
+        "regex": "a regex string to find the member by",
+        "slack": "slack-nickname",
+        "img": "http://i.imgur.com/an-image.jpg",
+        "thumb": "http://i.imgur.com/a-thumbnail.jpg",
+        "team": "his/her team"
+      },
+      {...}
+    ]
+  },
+  {...}
+]
+```
 
 ## Hubot Commands
 ```
